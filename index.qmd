@@ -1,0 +1,34 @@
+---
+title: "Hello from R in production"
+format: 
+    html:
+        self-contained: true
+
+---
+
+Hi, its: `r format(Sys.time(), '%H:%M')` on `r format(Sys.time(), '%B %d,  %Y')` in Atlanta, GA!
+
+```{r}
+#| warning: false
+#| message: false 
+library(ggplot2)
+library(dplyr)
+library(scales)
+```
+
+
+Our first plot with the `diamonds` dataset
+
+
+```{r}
+diamonds |>
+    filter(clarity =="IF") |>
+ggplot() +
+    geom_point(aes(x=x, y=price, size=y, color=cut), alpha = 0.7) +
+    xlab("Length in mm") +
+    ylab("Price") + 
+    scale_y_continuous(labels = scales::dollar_format()) +
+    scale_size(name = "Width in mm") +
+    scale_color_brewer(name = "Cut", palette = "Accent") +
+    theme_classic()
+```
